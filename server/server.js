@@ -53,14 +53,9 @@ app.post('/login', (req, res) => {
 
 // User submits preferences and looks for a match
 app.post('/home/:email', (req, res) => {
-  // console.log(req.connection.remoteAddress, 'req.connection.remoteAddress');
-  // console.log(req.connection, 'req.connection');
-  const { remoteAddress } = req.connection;
   // eslint-disable-next-line
   const { email, cravings, price, attire } = req.body; 
-  // TODO: Log to check req.body and IP
-  const userIP = remoteAddress.slice(7);
-  console.log(userIP, 'userIP');
+  const userIP = req.ip;
   updatePreferences(email, cravings, price, attire);
   getUserLocation(email, userIP)
     .then(userModel => matchMaker(userModel))
